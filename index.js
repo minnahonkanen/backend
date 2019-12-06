@@ -9,6 +9,7 @@ const cors = require('cors')
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(cors())
+app.use(express.static('build'))
 
 let persons = [
     {
@@ -48,15 +49,15 @@ const generateId = () => {
     }
 }
 
-app.get('/api/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/persons', (req, res) => {
+app.get('/persons', (req, res) => {
     res.json(persons)
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id)
 
@@ -73,14 +74,14 @@ app.get('/info', (request, response) => {
     response.send(`<p>${getInfo()}</p> \n ${timestamp}`)
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
 
     response.status(204).end()
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/persons', (request, response) => {
 
     const body = request.body
 
