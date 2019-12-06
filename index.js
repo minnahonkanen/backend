@@ -49,15 +49,15 @@ const generateId = () => {
     }
 }
 
-app.get('/', (req, res) => {
+app.get('/api/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
 })
 
-app.get('/persons', (req, res) => {
+app.get('/api/persons', (req, res) => {
     res.json(persons)
 })
 
-app.get('/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id)
 
@@ -69,19 +69,19 @@ app.get('/persons/:id', (request, response) => {
     
 })
 
-app.get('/info', (request, response) => {
+app.get('/api/info', (request, response) => {
     const timestamp = new Date()
     response.send(`<p>${getInfo()}</p> \n ${timestamp}`)
 })
 
-app.delete('/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
 
     response.status(204).end()
 })
 
-app.post('/persons', (request, response) => {
+app.post('/api/persons', (request, response) => {
 
     const body = request.body
 
