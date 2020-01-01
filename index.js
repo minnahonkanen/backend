@@ -25,8 +25,8 @@ app.use(express.static('build'))
 app.get('/api/persons', (request, response) => {
     Person.find({}).then(persons => {
         response.json(persons.map(person => person.toJSON()))
-    });
-});
+    })
+})
 
 app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id)
@@ -51,7 +51,7 @@ app.get('/api/info', (request, response) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndDelete(request.params.id)
-        .then(result => {
+        .then(() => {
             response.status(204).end()
         })
         .catch(error => next(error))
@@ -90,8 +90,8 @@ app.post('/api/persons', (request, response, next) => {
     newPerson.save()
         .then(savedPerson => {
             response.json(savedPerson.toJSON())
-    })
-    .catch(error => next(error))
+        })
+        .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
@@ -114,6 +114,7 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
